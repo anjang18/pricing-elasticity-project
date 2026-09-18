@@ -27,11 +27,11 @@ A separate Cheerios 15 oz case study evaluates price-change scenarios using a re
 - `dashboard/`: report screenshots and PDF
 
 ## Dashboard Preview
-![Sales Overview](dashboard/sales_overview.png)
+![Sales Overview](sales_overview.png)
 
-![Price Sensitivity](dashboard/price_sensitivity.png)
+![Price Sensitivity](price_sensitivity.png)
 
-![Pricing Scenarios](dashboard/pricing_scenarios.png)
+![Pricing Scenarios](pricing_scenarios.png)
 
 ## Data and Reproduction
 Raw data and the local database are not included in this repository.
