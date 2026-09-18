@@ -33,14 +33,21 @@ A separate Cheerios 15 oz case study evaluates price-change scenarios using a re
 
 ![Pricing Scenarios](dashboard/pricing_scenarios.png)
 
-## Data and Reproduction
-Raw data and the local database are not included in this repository.
+## Run the analysis
 
-The cleaning notebook expects `wcer.zip` and `upccer.csv` in `data/raw/`. Run the notebooks in numerical order to clean the data, estimate the models, and generate reporting exports.
+Raw data, processed Parquet files, and the local database are not included. The committed CSVs, screenshots, and PDF contain the original analysis results. Notebooks are stored without execution output to keep the walkthrough readable; run them to generate current tables and charts.
 
-Open notebooks from the repository root or the `notebooks/` directory; project paths are resolved automatically. Create `data/raw/` and place the two raw input files there before running notebook 01. The cleaning notebook creates `data/processed/` for its generated Parquet files.
+Use a Python environment with `pandas`, `numpy`, `matplotlib`, `statsmodels`, `pyarrow`, `duckdb`, and Jupyter installed. Open the notebooks with the kernel's working directory set to the repository root or `notebooks/`; project paths are resolved automatically.
 
-Run notebooks 01–04 in numerical order. Notebook 03 writes model outputs to `outputs/python_results/`. Notebook 04 reads those files and writes the five Power BI input tables to `outputs/powerbi/`; the committed `dim_product.csv` and `weekly_sales.csv` are existing reporting exports.
+1. Create `data/raw/` and add `wcer.zip` (containing `wcer.csv`) and `upccer.csv`.
+2. Run [01 · Data cleaning](notebooks/01_data_cleaning.ipynb) to join product metadata, apply the final sample rules, check quality, and save processed Parquet files.
+3. Run [02 · Exploratory analysis](notebooks/02_eda.ipynb) to examine product performance, price variation, promotions, and store/week differences.
+4. Run [03 · Elasticity modeling](notebooks/03_elasticity_modeling.ipynb) to compare specifications, check sensitivity, evaluate price scenarios, and export three tables to `outputs/python_results/`.
+5. Run [04 · SQL reporting](notebooks/04_sql_reporting.ipynb) to load DuckDB, apply [the reporting views](sql/01_reporting_views.sql), reconcile totals, and export five tables to `outputs/powerbi/`.
+
+Run each notebook from top to bottom. The workflow creates output directories and overwrites generated files on rerun. Only the two sales-reporting exports are currently committed in `outputs/powerbi/`; notebook 04 also copies the three model tables there for Power BI. Import UPC as text to preserve it as a join key.
+
+Each notebook explains its inputs, decisions, and outputs. Historical numerical interpretations refer to the original dataset run and should be checked against new results when rerunning with different data. The cleanup preserves the original sample rules, model specifications, scenario formulas, and export schemas; it adds checks for ambiguous product joins, failed portfolio fits, and reporting totals.
 
 [View the Cereal Pricing Analysis report](dashboard/Cereal%20Pricing%20Analysis.pdf)
 
@@ -48,3 +55,4 @@ Run notebooks 01–04 in numerical order. Notebook 03 writes model outputs to `o
 Sales analysis retains valid positive-sales observations. Elasticity estimates are observational rather than causal. Pricing scenarios assume constant elasticity and fixed approximate unit cost derived from the dataset’s accounting margin field.
 
 The portfolio and Cheerios scenario models use different promotion-control specifications.
+
