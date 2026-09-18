@@ -27,18 +27,22 @@ A separate Cheerios 15 oz case study evaluates price-change scenarios using a re
 - `dashboard/`: report screenshots and PDF
 
 ## Dashboard Preview
-![Sales Overview](sales_overview.png)
+![Sales Overview](dashboard/sales_overview.png)
 
-![Price Sensitivity](price_sensitivity.png)
+![Price Sensitivity](dashboard/price_sensitivity.png)
 
-![Pricing Scenarios](pricing_scenarios.png)
+![Pricing Scenarios](dashboard/pricing_scenarios.png)
 
 ## Data and Reproduction
 Raw data and the local database are not included in this repository.
 
 The cleaning notebook expects `wcer.zip` and `upccer.csv` in `data/raw/`. Run the notebooks in numerical order to clean the data, estimate the models, and generate reporting exports.
 
-Update local project paths before running the notebooks on another computer.
+Open notebooks from the repository root or the `notebooks/` directory; project paths are resolved automatically. Create `data/raw/` and place the two raw input files there before running notebook 01. The cleaning notebook creates `data/processed/` for its generated Parquet files.
+
+Run notebooks 01–04 in numerical order. Notebook 03 writes model outputs to `outputs/python_results/`. Notebook 04 reads those files and writes the five Power BI input tables to `outputs/powerbi/`; the committed `dim_product.csv` and `weekly_sales.csv` are existing reporting exports.
+
+[View the Cereal Pricing Analysis report](dashboard/Cereal%20Pricing%20Analysis.pdf)
 
 ## Limitations
 Sales analysis retains valid positive-sales observations. Elasticity estimates are observational rather than causal. Pricing scenarios assume constant elasticity and fixed approximate unit cost derived from the dataset’s accounting margin field.
